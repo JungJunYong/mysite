@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	<select id="find" parameterType="map" resultType="boardvo" >
+	<choose>
+	<when test="key == null">
+	<![CDATA[
+	select a.no as no ,a.title as title,a.contents as contents,a.hit as hit,a.reg_date as regDate,a.g_no as gNo,a.o_no as oNo,a.depth as depth,b.name as userName,a.delet as delet
+	from board a,user b
+	where a.user_no = b.no order by g_no desc,o_no desc limit #{startpage} , #{lastpage}
+	]]>
+	</when>
+	<otherwise>
+	<![CDATA[
+	select a.title as title,a.contents as contents,b.name as userName,a.g_no as gNo,a.o_no as oNo,a.depth as depth,a.hit as hit,a.delet as delet,a.no as no,a.reg_date as regDate from board a,user b where  a.user_no=b.no and a.title like '%${key}%'  and a.delet = 0 limit #{startpage} , #{lastpage} 
+	]]>
+	</otherwise>
+	</choose>
+	</select>
+	
+	
+	<select id="commentlist" parameterType="long" resultType="commentvo">
+	<![CDATA[
+	   select a.board_no as boardNo,b.name as userName,a.contents as contents,a.no as no from comments a,user b where user_no = b.no and board_no = #{no}
+	]]>
+	</select>
+	
+	<insert id="replywrite" parameterType="BoardVo">
+	insert into board values(null,#{title},#{contents},0,now(),#{gNo},#{oNo},#{depth}+1,#{userNo},0)
+	
+	</insert>
+	<update id="replyupdate" parameterType="BoardVo">
+	update board set o_no = o_no+1 where g_no = #{gNo}  and o_no >= #{oNo}
+	</update>
+	
+	<update id = "hitupdate" parameterType="BoardVo">
+	update board set hit = hit+1 where no = #{no};
+	</update>
+	
+	<select id="viewfind" parameterType="long" resultType="boardvo">
+	<![CDATA[
+		select no,title,contents,hit,reg_date as regDate,g_no as gNo,o_no as oNo,depth,user_no as userNo,delet from board where no = #{no}
+	]]>
+	
+	</select>
+	
+	<insert id="boardwrite" parameterType="boardvo">
+	<![CDATA[
+		insert into board values(null,#{title},#{contents},0,now(),(select max(a.no) from board a),1,0,#{userNo},0)
+	]]>
+	</insert>
+	<update id="boardupdate" parameterType="boardvo">
+	<![CDATA[
+	update board set title = #{title} , contents = #{contents} where no = #{no}
+	]]>
+	</update>
+	
+	<insert id="commentinsert" parameterType="commentvo">
+	<![CDATA[
+		insert into comments values(null,#{boardNo},#{userNo},#{contents})
+	]]>
+	</insert>
+	
+	<insert id="commentdelete" parameterType="commentvo">
+	<![CDATA[
+		delete from comments where no = #{no}
+	]]>
+	</insert>
+
+	
+	<update id="delete">
+	<![CDATA[
+	update board set delet = 1 where no = #{no}
+	]]>
+	</update>
+
+	
+	
+
+</mapper>
