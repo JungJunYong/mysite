@@ -12,7 +12,7 @@ public class MainRepository {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public MainVo find() {
+	public MainVo find() { 
 		return  sqlSession.selectOne("main.find");
 	}
 
