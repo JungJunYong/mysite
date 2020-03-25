@@ -6,7 +6,8 @@
   <packaging>pom</packaging>
   <modules>
   	<module>mysite02</module>
-  	<module>mystie03</module>
+  	<module>mysite03</module>
+  	<module>mysite04</module>
   </modules>
   
   	<properties>
