@@ -38,8 +38,8 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
-		
+
+
 
 		<!-- Spring Web -->
 		<dependency>
@@ -128,6 +128,13 @@
 			<artifactId>mariadb-java-client</artifactId>
 			<version>2.4.4</version>
 		</dependency>
+		
+		<!-- jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.8</version>
+		</dependency>
 
 		<!-- jstl -->
 		<dependency>
@@ -162,7 +169,7 @@
 			<version>2.0</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 
 
 
