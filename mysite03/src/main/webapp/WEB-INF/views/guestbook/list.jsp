@@ -38,7 +38,7 @@
 						<c:forEach items="${list }" var='vo' varStatus='status'>
 						<table>
 							<tr>
-								<td>[${listCount-status.index }  ]
+								<td>[${listCount-status.index } ]
 								</td>
 								<td>${vo.name }</td>
 								<td>${vo.regDate }</td>

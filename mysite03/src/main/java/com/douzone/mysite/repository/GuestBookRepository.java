@@ -18,14 +18,18 @@ public class GuestBookRepository {
 	return sqlSession.selectList("guestbook.findall");
 	}
 
-	public boolean delete(GuestBookVo vo) {
-		int count = sqlSession.delete("guestbook.delete", vo);
-		return count == 1;
+	public int delete( GuestBookVo vo ) {
+		return sqlSession.delete( "guestbook.delete", vo );
 	}
 
 	public boolean insert(GuestBookVo vo) {
 		int count = sqlSession.insert("guestbook.insert", vo);
 		return count == 1;
 	}
+
+	public List<GuestBookVo> findAll(Long startNo) {
+		return sqlSession.selectList("guestbook.findAllByNo", startNo);
+	}
+
 
 }

@@ -26,6 +26,16 @@ public class GuestBookService {
 	public void delete(GuestBookVo vo) {
 		guestBookRepository.delete(vo);
 	}
+
+
+	public List<GuestBookVo> getMessageList(Long no) {
+		return guestBookRepository.findAll(no);
+	}
+
+
+	public boolean delete(Long no, String password) {
+		return 1 == guestBookRepository.delete( new GuestBookVo(no, password) );
+	}
 	
 	
 
